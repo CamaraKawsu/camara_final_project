@@ -1,0 +1,133 @@
+<div class="container mt-4">
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h3 class="mb-0">
+        {{ isEditMode ? "Edit Student" : "Add New Student" }}
+      </h3>
+    </div>
+    <div class="card-body p-4">
+      <div *ngIf="loading" class="text-center">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p>Loading form...</p>
+      </div>
+
+      <form [formGroup]="studentForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+        <div class="mb-3">
+          <label for="userId" class="form-label">Associated User (Email)</label>
+          <select
+            class="form-select"
+            id="userId"
+            formControlName="userId"
+            [ngClass]="{
+              'is-invalid':
+                f['userId'].invalid &&
+                (f['userId'].dirty || f['userId'].touched)
+            }"
+            [disabled]="isEditMode && f['userId'].value"
+          >
+            <option value="">-- Select User --</option>
+            <option *ngFor="let user of availableUsers" [value]="user._id">
+              {{ user.email }} ({{ user.name }})
+            </option>
+          </select>
+          <div
+            *ngIf="
+              f['userId'].invalid && (f['userId'].dirty || f['userId'].touched)
+            "
+            class="invalid-feedback"
+          >
+            <div *ngIf="f['userId'].errors?.['required']">
+              User is required.
+            </div>
+          </div>
+          <small
+            *ngIf="isEditMode && f['userId'].disabled"
+            class="form-text text-muted"
+          >
+            The associated user cannot be changed for an existing student
+            profile.
+          </small>
+        </div>
+
+        <div class="mb-3">
+          <label for="studentId" class="form-label">Student ID</label>
+          <input
+            type="text"
+            class="form-control"
+            id="studentId"
+            formControlName="studentId"
+            [ngClass]="{
+              'is-invalid':
+                f['studentId'].invalid &&
+                (f['studentId'].dirty || f['studentId'].touched)
+            }"
+          />
+          <div
+            *ngIf="
+              f['studentId'].invalid &&
+              (f['studentId'].dirty || f['studentId'].touched)
+            "
+            class="invalid-feedback"
+          >
+            <div *ngIf="f['studentId'].errors?.['required']">
+              Student ID is required.
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="major" class="form-label">Major</label>
+          <input
+            type="text"
+            class="form-control"
+            id="major"
+            formControlName="major"
+            [ngClass]="{
+              'is-invalid':
+                f['major'].invalid && (f['major'].dirty || f['major'].touched)
+            }"
+          />
+          <div
+            *ngIf="
+              f['major'].invalid && (f['major'].dirty || f['major'].touched)
+            "
+            class="invalid-feedback"
+          >
+            <div *ngIf="f['major'].errors?.['required']">
+              Major is required.
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="alert alert-danger">
+          {{ errorMessage }}
+        </div>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="studentForm.invalid || loading"
+          >
+            <span
+              *ngIf="loading"
+              class="spinner-border spinner-border-sm me-2"
+              role="status"
+              aria-hidden="true"
+            ></span>
+            {{ isEditMode ? "Update Student" : "Create Student" }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="router.navigate(['/students'])"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

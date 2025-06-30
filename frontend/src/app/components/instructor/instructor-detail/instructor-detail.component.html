@@ -1,0 +1,71 @@
+<div class="container mt-4">
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p>Loading instructor details...</p>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <div *ngIf="!loading && instructor" class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h3 class="mb-0">
+        {{ instructor.user.name }} (Employee ID: {{ instructor.employeeId }})
+      </h3>
+    </div>
+    <div class="card-body">
+      <p><strong>Email:</strong> {{ instructor.user.email }}</p>
+      <p><strong>Department:</strong> {{ instructor.department }}</p>
+
+      <h4 class="mt-4">Courses Taught:</h4>
+      <div *ngIf="(instructor?.coursesTaught?.length ?? 0) > 0">
+        <ul class="list-group">
+          <li
+            class="list-group-item"
+            *ngFor="let course of instructor.coursesTaught"
+          >
+            {{ course.title }} ({{ course.courseCode }})
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="!instructor?.coursesTaught?.length" class="alert alert-info">
+        No courses currently assigned.
+      </div>
+
+      <h4 class="mt-4">Assign a Course:</h4>
+      <div class="input-group mb-3">
+        <label for="courseSelect" class="input-group-text">Assign Course</label>
+        <select
+          id="courseSelect"
+          class="form-select"
+          [(ngModel)]="selectedCourseId"
+          name="courseSelect"
+          aria-label="Select course to assign"
+        >
+          <option value="">-- Select a Course --</option>
+          <option *ngFor="let course of availableCourses" [value]="course._id">
+            {{ course.title }} ({{ course.courseCode }})
+          </option>
+        </select>
+        <button
+          type="button"
+          class="btn btn-success me-2"
+          (click)="assignCourse()"
+          [disabled]="!selectedCourseId"
+        >
+          Assign Course
+        </button>
+        <a [routerLink]="['/instructors']" class="btn btn-secondary me-2">
+          Back to List
+        </a>
+        <a
+          *ngIf="canEditOrDelete()"
+          routerLink="/instructors/edit/{{ instructor._id }}"
+          class="btn btn-warning"
+          >Edit Instructor</a
+        >
+      </div>
+    </div>
+  </div>
+</div>

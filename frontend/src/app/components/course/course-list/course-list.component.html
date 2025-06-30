@@ -1,0 +1,64 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Courses List</h2>
+    <button
+      *ngIf="canManageCourses()"
+      class="btn btn-primary"
+      routerLink="/courses/new"
+    >
+      Add New Course
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p>Loading courses...</p>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <div *ngIf="!loading && courses.length === 0" class="alert alert-info">
+    No courses found.
+  </div>
+
+  <div class="table-responsive" *ngIf="!loading && courses.length > 0">
+    <table class="table table-hover table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Course Code</th>
+          <th scope="col">Credits</th>
+          <th scope="col">Instructor</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let course of courses; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ course.title }}</td>
+          <td>{{ course.courseCode }}</td>
+          <td>{{ course.credits }}</td>
+          <td>{{ course.instructor?.name || 'Unassigned' }}</td>
+          <td>
+            <ng-container *ngIf="canManageCourses()">
+              <a
+                routerLink="/courses/edit/{{ course._id }}"
+                class="btn btn-warning btn-sm me-2"
+                >Edit</a
+              >
+              <button
+                class="btn btn-danger btn-sm"
+                (click)="deleteCourse(course._id)"
+              >
+                Delete
+              </button>
+            </ng-container>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

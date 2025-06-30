@@ -1,0 +1,187 @@
+<div class="container mt-4">
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h3 class="mb-0">{{ isEditMode ? "Edit Course" : "Add New Course" }}</h3>
+    </div>
+    <div class="card-body p-4">
+      <div *ngIf="loading" class="text-center">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p>Loading form...</p>
+      </div>
+
+      <form [formGroup]="courseForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+        <div class="mb-3">
+          <label for="title" class="form-label">Course Title</label>
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            formControlName="title"
+            [ngClass]="{
+              'is-invalid':
+                f['title'].invalid && (f['title'].dirty || f['title'].touched)
+            }"
+          />
+          <div
+            *ngIf="
+              f['title'].invalid && (f['title'].dirty || f['title'].touched)
+            "
+            class="invalid-feedback"
+          >
+            <div *ngIf="f['title'].errors?.['required']">
+              Course title is required.
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="courseCode" class="form-label">Course Code</label>
+          <input
+            type="text"
+            class="form-control"
+            id="courseCode"
+            formControlName="courseCode"
+            [ngClass]="{
+              'is-invalid':
+                f['courseCode'].invalid &&
+                (f['courseCode'].dirty || f['courseCode'].touched)
+            }"
+          />
+          <div
+            *ngIf="
+              f['courseCode'].invalid &&
+              (f['courseCode'].dirty || f['courseCode'].touched)
+            "
+            class="invalid-feedback"
+          >
+            <div *ngIf="f['courseCode'].errors?.['required']">
+              Course code is required.
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea
+            class="form-control"
+            id="description"
+            formControlName="description"
+            rows="3"
+            [ngClass]="{
+              'is-invalid':
+                f['description'].invalid &&
+                (f['description'].dirty || f['description'].touched)
+            }"
+          ></textarea>
+          <div
+            *ngIf="
+              f['description'].invalid &&
+              (f['description'].dirty || f['description'].touched)
+            "
+            class="invalid-feedback"
+          >
+            <div *ngIf="f['description'].errors?.['required']">
+              Description is required.
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="credits" class="form-label">Credits</label>
+          <input
+            type="number"
+            class="form-control"
+            id="credits"
+            formControlName="credits"
+            [ngClass]="{
+              'is-invalid':
+                f['credits'].invalid &&
+                (f['credits'].dirty || f['credits'].touched)
+            }"
+          />
+          <div
+            *ngIf="
+              f['credits'].invalid &&
+              (f['credits'].dirty || f['credits'].touched)
+            "
+            class="invalid-feedback"
+          >
+            <div *ngIf="f['credits'].errors?.['required']">
+              Credits are required.
+            </div>
+            <div *ngIf="f['credits'].errors?.['min']">
+              Credits must be at least 1.
+            </div>
+            <div *ngIf="f['credits'].errors?.['max']">
+              Credits cannot exceed 6.
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="instructorId" class="form-label"
+            >Assigned Instructor</label
+          >
+          <select
+            class="form-select"
+            id="instructorId"
+            formControlName="instructorId"
+            [ngClass]="{
+              'is-invalid':
+                f['instructorId'].invalid &&
+                (f['instructorId'].dirty || f['instructorId'].touched)
+            }"
+          >
+            <option [ngValue]="null">-- Select Instructor (Optional) --</option>
+            <option
+              *ngFor="let instructor of availableInstructors"
+              [value]="instructor._id"
+            >
+              {{ instructor.user.name || instructor.employeeId }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              f['instructorId'].invalid &&
+              (f['instructorId'].dirty || f['instructorId'].touched)
+            "
+            class="invalid-feedback"
+          >
+            <div *ngIf="f['instructorId'].errors?.['required']">
+              Instructor selection is required.
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="alert alert-danger">
+          {{ errorMessage }}
+        </div>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="courseForm.invalid || loading"
+          >
+            <span
+              *ngIf="loading"
+              class="spinner-border spinner-border-sm me-2"
+              role="status"
+              aria-hidden="true"
+            ></span>
+            {{ isEditMode ? "Update Course" : "Create Course" }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="router.navigate(['/courses'])"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
