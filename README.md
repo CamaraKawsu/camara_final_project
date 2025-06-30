@@ -1,45 +1,46 @@
-# 🎓 Student Management System – MEAN Stack
+# 🏫 School Management System – MEAN Stack
 
-This is a **full-stack Student Management System** built with the **MEAN stack** (MongoDB, Express.js, Angular, Node.js). It features secure authentication, dynamic role-based authorization (Admin, Editor, Viewer), and a clean user-friendly interface.
-
----
-
-## 🛠 Features
-
-- ✅ User Registration & Login (JWT Auth)
-- ✅ Role-Based Access Control (Admin, Editor, Viewer)
-- ✅ Route Protection (Backend & Frontend)
-- ✅ Clean Angular UI with conditional views
-- ✅ MongoDB Atlas integration
+A modern full-stack **School Management System** built with the **MEAN stack** (MongoDB, Express.js, Angular, Node.js). It allows user registration, login, and dynamic role-based access control for Admins, Teachers, and Students.
 
 ---
 
-## 📁 Folder Structure
+## 📌 Key Features
+
+- ✅ Secure JWT Authentication
+- ✅ Role-Based Access (Admin, Teacher, Student)
+- ✅ Student Records Management
+- ✅ Course & Subject Management
+- ✅ Angular Route Guards for Role-Specific Views
+- ✅ MongoDB Atlas Integration
+
+---
+
+## 📁 Project Structure
 
 ```
-/frontend   → Angular frontend
-/backend    → Node.js + Express backend
-.env        → Environment variables (create this file)
+/frontend   → Angular Frontend
+/backend    → Express.js + MongoDB Backend
+.env        → Contains environment variables (create this file in backend)
 ```
 
 ---
 
-## 🔧 Setup Instructions
+## 🔧 Installation Guide
 
-### 1. Clone or Fork the Repository
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/student-management-mean.git
-cd student-management-mean
+git clone https://github.com/your-username/school-management-mean.git
+cd school-management-mean
 ```
 
 ---
 
-### 2. Create `.env` File in Root of `/backend`
+### 2. Create `.env` File in `/backend`
 
-Create a `.env` file inside the **backend folder** and add:
+Inside the `/backend` folder, create a file named `.env` with the following:
 
-```bash
+```env
 PORT=5000
 MONGO_URI=your_mongodb_atlas_connection_string
 JWT_SECRET=supersecretjwtkey
@@ -50,15 +51,13 @@ JWT_EXPIRES_IN=1h
 
 ### 3. Install Dependencies
 
-#### 🖥 Backend
-
+#### 🖥 Backend Setup
 ```bash
 cd backend
 npm install
 ```
 
-#### 🌐 Frontend
-
+#### 🌐 Frontend Setup
 ```bash
 cd ../frontend
 npm install
@@ -66,70 +65,62 @@ npm install
 
 ---
 
-## ▶️ How to Run the App
+## ▶️ Running the Application
 
-### 🚀 Start the Backend Server
-
-Make sure you're in the `/backend` folder:
-
+### 🚀 Start Backend (API Server)
 ```bash
+cd backend
 npm run start
 ```
 
-The backend will run on: `http://localhost:5000`
+- Runs at: `http://localhost:5000`
 
 ---
 
-### 🌍 Start the Frontend Angular App
-
-Go to the `/frontend` folder:
-
+### 🌍 Start Frontend (Angular UI)
 ```bash
+cd frontend
 ng serve
 ```
 
-Frontend runs on: `http://localhost:4200`
+- Runs at: `http://localhost:4200`
 
 ---
 
-## 👥 Pre-Created Test Users
+## 👥 Pre-Created Demo Users
 
-You can log in using the following demo accounts:
-
-| Role    | Email                  | Password  |
-|---------|------------------------|-----------|
-| Admin   | admin@example.com      | password  |
-| Editor  | editor@example.com     | password  |
-| Viewer  | viewer@example.com     | password  |
-
-Admins can manage users and assign roles dynamically.
+| Role     | Email                  | Password  |
+|----------|------------------------|-----------|
+| Admin    | admin@school.com       | password  |
+| Teacher  | teacher@school.com     | password  |
+| Student  | student@school.com     | password  |
 
 ---
 
-## 📌 Technologies Used
+## 🧰 Tech Stack
 
 - **Frontend:** Angular 15+
-- **Backend:** Node.js, Express.js
+- **Backend:** Node.js + Express.js
 - **Database:** MongoDB Atlas
-- **Auth:** JWT, bcrypt
-- **Role-Based Routing:** Angular Guards + Express Middleware
+- **Auth:** JSON Web Token (JWT)
+- **UI Protection:** Angular Route Guards + Express Middleware
 
 ---
 
-## 🙌 Author
+## ✍️ Developed By
 
-- **Instructor:** Mr. Camara (GTMI, The Gambia)
-- **Course:** Internet & Web Programming II
-- **Institution:** University of The Gambia
-
----
-
-## 🧠 Note for Students
-
-- Don’t forget to commit regularly.
-- Always keep your `.env` file private.
-- If you contribute or extend this system, push to your **own fork** and submit via Google Classroom.
+- **Instructor:** Mr. Camara  
+- **Course:** Internet & Web Programming II  
+- **Institution:** University of The Gambia / GTMI
 
 ---
 
-> 💬 "Learning to code is hard — until it’s not. Keep showing up." – Mr. Camara
+## 📌 Notes for Students
+
+- Commit your code often.
+- Never push your `.env` file to GitHub.
+- Use your forked repo for submission via Google Classroom.
+
+---
+
+> 📢 “Discipline + Consistency = Mastery. Let’s build the future, one line of code at a time.” – Mr. Camara
